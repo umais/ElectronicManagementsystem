@@ -1,0 +1,575 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ScheduleDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="ScheduleDBModelStoreContainer">
+          <EntitySet Name="Appointments" EntityType="ScheduleDBModel.Store.Appointments" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Customer_Insurance" EntityType="ScheduleDBModel.Store.Customer_Insurance" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Customers" EntityType="ScheduleDBModel.Store.Customers" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Insurance_Type" EntityType="ScheduleDBModel.Store.Insurance_Type" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Professional" EntityType="ScheduleDBModel.Store.Professional" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Professional_Schedule" EntityType="ScheduleDBModel.Store.Professional_Schedule" store:Type="Tables" store:Schema="dbo" store:Name="Professional_Schedule">
+            <DefiningQuery>SELECT 
+      [Professional_Schedule].[Professional_ID] AS [Professional_ID], 
+      [Professional_Schedule].[StartTime] AS [StartTime], 
+      [Professional_Schedule].[EndTime] AS [EndTime], 
+      [Professional_Schedule].[TimeIntervalMinutes] AS [TimeIntervalMinutes]
+      FROM [dbo].[Professional_Schedule] AS [Professional_Schedule]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Professional_Type" EntityType="ScheduleDBModel.Store.Professional_Type" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Status_Type" EntityType="ScheduleDBModel.Store.Status_Type" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Appointments_Customers" Association="ScheduleDBModel.Store.FK_Appointments_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointments_Professional" Association="ScheduleDBModel.Store.FK_Appointments_Professional">
+            <End Role="Professional" EntitySet="Professional" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointments_Status_Type" Association="ScheduleDBModel.Store.FK_Appointments_Status_Type">
+            <End Role="Status_Type" EntitySet="Status_Type" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Insurance_Customers" Association="ScheduleDBModel.Store.FK_Customer_Insurance_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Customer_Insurance" EntitySet="Customer_Insurance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Insurance_Insurance_Type" Association="ScheduleDBModel.Store.FK_Customer_Insurance_Insurance_Type">
+            <End Role="Insurance_Type" EntitySet="Insurance_Type" />
+            <End Role="Customer_Insurance" EntitySet="Customer_Insurance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Professional_Professional_Type" Association="ScheduleDBModel.Store.FK_Professional_Professional_Type">
+            <End Role="Professional_Type" EntitySet="Professional_Type" />
+            <End Role="Professional" EntitySet="Professional" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Professional_Schedule_Professional" Association="ScheduleDBModel.Store.FK_Professional_Schedule_Professional">
+            <End Role="Professional" EntitySet="Professional" />
+            <End Role="Professional_Schedule" EntitySet="Professional_Schedule" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Appointments">
+          <Key>
+            <PropertyRef Name="AppointmentID" />
+          </Key>
+          <Property Name="AppointmentID" Type="int" Nullable="false" />
+          <Property Name="Professional_ID" Type="int" Nullable="false" />
+          <Property Name="Customer_ID" Type="int" />
+          <Property Name="AppointmentDate" Type="date" Nullable="false" />
+          <Property Name="AppointmentStartTime" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="StatusID" Type="int" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Customer_Insurance">
+          <Key>
+            <PropertyRef Name="InsuranceID" />
+            <PropertyRef Name="Customer_ID" />
+            <PropertyRef Name="EffectiveDate" />
+          </Key>
+          <Property Name="InsuranceID" Type="int" Nullable="false" />
+          <Property Name="Customer_ID" Type="int" Nullable="false" />
+          <Property Name="EffectiveDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="PCPName" Type="nvarchar" MaxLength="100" />
+          <Property Name="CustomerInsuranceNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="InsuranceType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="Customer_ID" />
+          </Key>
+          <Property Name="Customer_ID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="100" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="char" MaxLength="2" />
+          <Property Name="Zip" Type="char" MaxLength="10" />
+          <Property Name="HomePhone" Type="nvarchar" MaxLength="10" />
+          <Property Name="CellPhone" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Insurance_Type">
+          <Key>
+            <PropertyRef Name="InsuranceID" />
+          </Key>
+          <Property Name="InsuranceID" Type="int" Nullable="false" />
+          <Property Name="InsuranceName" Type="nvarchar" MaxLength="50" />
+          <Property Name="InsuranceAddress" Type="nvarchar" MaxLength="150" />
+          <Property Name="InsurancePhone" Type="nvarchar" MaxLength="10" />
+          <Property Name="InsuranceWebsite" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Professional">
+          <Key>
+            <PropertyRef Name="Professional_ID" />
+          </Key>
+          <Property Name="Professional_ID" Type="int" Nullable="false" />
+          <Property Name="Professional_Type_ID" Type="int" Nullable="false" />
+          <Property Name="First_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Last_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Professional_Identification_Number" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'ScheduleDB.dbo.Professional_Schedule' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="Professional_Schedule">
+          <Key>
+            <PropertyRef Name="Professional_ID" />
+            <PropertyRef Name="StartTime" />
+          </Key>
+          <Property Name="Professional_ID" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="TimeIntervalMinutes" Type="smallint" />
+        </EntityType>
+        <EntityType Name="Professional_Type">
+          <Key>
+            <PropertyRef Name="Professional_Type_ID" />
+          </Key>
+          <Property Name="Professional_Type_ID" Type="int" Nullable="false" />
+          <Property Name="Professional_Type_Desc" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Status_Type">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="StatusDesc" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Appointments_Customers">
+          <End Role="Customers" Type="ScheduleDBModel.Store.Customers" Multiplicity="0..1" />
+          <End Role="Appointments" Type="ScheduleDBModel.Store.Appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Customer_ID" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="Customer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointments_Professional">
+          <End Role="Professional" Type="ScheduleDBModel.Store.Professional" Multiplicity="1" />
+          <End Role="Appointments" Type="ScheduleDBModel.Store.Appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professional">
+              <PropertyRef Name="Professional_ID" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="Professional_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointments_Status_Type">
+          <End Role="Status_Type" Type="ScheduleDBModel.Store.Status_Type" Multiplicity="0..1" />
+          <End Role="Appointments" Type="ScheduleDBModel.Store.Appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status_Type">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_Insurance_Customers">
+          <End Role="Customers" Type="ScheduleDBModel.Store.Customers" Multiplicity="1" />
+          <End Role="Customer_Insurance" Type="ScheduleDBModel.Store.Customer_Insurance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Customer_ID" />
+            </Principal>
+            <Dependent Role="Customer_Insurance">
+              <PropertyRef Name="Customer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_Insurance_Insurance_Type">
+          <End Role="Insurance_Type" Type="ScheduleDBModel.Store.Insurance_Type" Multiplicity="1" />
+          <End Role="Customer_Insurance" Type="ScheduleDBModel.Store.Customer_Insurance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insurance_Type">
+              <PropertyRef Name="InsuranceID" />
+            </Principal>
+            <Dependent Role="Customer_Insurance">
+              <PropertyRef Name="InsuranceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Professional_Professional_Type">
+          <End Role="Professional_Type" Type="ScheduleDBModel.Store.Professional_Type" Multiplicity="1" />
+          <End Role="Professional" Type="ScheduleDBModel.Store.Professional" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professional_Type">
+              <PropertyRef Name="Professional_Type_ID" />
+            </Principal>
+            <Dependent Role="Professional">
+              <PropertyRef Name="Professional_Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Professional_Schedule_Professional">
+          <End Role="Professional" Type="ScheduleDBModel.Store.Professional" Multiplicity="1" />
+          <End Role="Professional_Schedule" Type="ScheduleDBModel.Store.Professional_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professional">
+              <PropertyRef Name="Professional_ID" />
+            </Principal>
+            <Dependent Role="Professional_Schedule">
+              <PropertyRef Name="Professional_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ScheduleDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ScheduleDBEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Appointments" EntityType="ScheduleDBModel.Appointment" />
+          <EntitySet Name="Customer_Insurance" EntityType="ScheduleDBModel.Customer_Insurance" />
+          <EntitySet Name="Customers" EntityType="ScheduleDBModel.Customer" />
+          <EntitySet Name="Insurance_Type" EntityType="ScheduleDBModel.Insurance_Type" />
+          <EntitySet Name="Professionals" EntityType="ScheduleDBModel.Professional" />
+          <EntitySet Name="Professional_Schedule" EntityType="ScheduleDBModel.Professional_Schedule" />
+          <EntitySet Name="Professional_Type" EntityType="ScheduleDBModel.Professional_Type" />
+          <EntitySet Name="Status_Type" EntityType="ScheduleDBModel.Status_Type" />
+          <AssociationSet Name="FK_Appointments_Customers" Association="ScheduleDBModel.FK_Appointments_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointments_Professional" Association="ScheduleDBModel.FK_Appointments_Professional">
+            <End Role="Professional" EntitySet="Professionals" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointments_Status_Type" Association="ScheduleDBModel.FK_Appointments_Status_Type">
+            <End Role="Status_Type" EntitySet="Status_Type" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Insurance_Customers" Association="ScheduleDBModel.FK_Customer_Insurance_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Customer_Insurance" EntitySet="Customer_Insurance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Insurance_Insurance_Type" Association="ScheduleDBModel.FK_Customer_Insurance_Insurance_Type">
+            <End Role="Insurance_Type" EntitySet="Insurance_Type" />
+            <End Role="Customer_Insurance" EntitySet="Customer_Insurance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Professional_Professional_Type" Association="ScheduleDBModel.FK_Professional_Professional_Type">
+            <End Role="Professional_Type" EntitySet="Professional_Type" />
+            <End Role="Professional" EntitySet="Professionals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Professional_Schedule_Professional" Association="ScheduleDBModel.FK_Professional_Schedule_Professional">
+            <End Role="Professional" EntitySet="Professionals" />
+            <End Role="Professional_Schedule" EntitySet="Professional_Schedule" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="AppointmentID" />
+          </Key>
+          <Property Name="AppointmentID" Type="Int32" Nullable="false" />
+          <Property Name="Professional_ID" Type="Int32" Nullable="false" />
+          <Property Name="Customer_ID" Type="Int32" />
+          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AppointmentStartTime" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="Comments" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Customer" Relationship="ScheduleDBModel.FK_Appointments_Customers" FromRole="Appointments" ToRole="Customers" />
+          <NavigationProperty Name="Professional" Relationship="ScheduleDBModel.FK_Appointments_Professional" FromRole="Appointments" ToRole="Professional" />
+          <NavigationProperty Name="Status_Type" Relationship="ScheduleDBModel.FK_Appointments_Status_Type" FromRole="Appointments" ToRole="Status_Type" />
+        </EntityType>
+        <EntityType Name="Customer_Insurance">
+          <Key>
+            <PropertyRef Name="InsuranceID" />
+            <PropertyRef Name="Customer_ID" />
+            <PropertyRef Name="EffectiveDate" />
+          </Key>
+          <Property Name="InsuranceID" Type="Int32" Nullable="false" />
+          <Property Name="Customer_ID" Type="Int32" Nullable="false" />
+          <Property Name="EffectiveDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="PCPName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="CustomerInsuranceNumber" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="InsuranceType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Customer" Relationship="ScheduleDBModel.FK_Customer_Insurance_Customers" FromRole="Customer_Insurance" ToRole="Customers" />
+          <NavigationProperty Name="Insurance_Type" Relationship="ScheduleDBModel.FK_Customer_Insurance_Insurance_Type" FromRole="Customer_Insurance" ToRole="Insurance_Type" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Customer_ID" />
+          </Key>
+          <Property Name="Customer_ID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Address1" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Address2" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="City" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="State" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
+          <Property Name="Zip" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
+          <Property Name="HomePhone" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="CellPhone" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Appointments" Relationship="ScheduleDBModel.FK_Appointments_Customers" FromRole="Customers" ToRole="Appointments" />
+          <NavigationProperty Name="Customer_Insurance" Relationship="ScheduleDBModel.FK_Customer_Insurance_Customers" FromRole="Customers" ToRole="Customer_Insurance" />
+        </EntityType>
+        <EntityType Name="Insurance_Type">
+          <Key>
+            <PropertyRef Name="InsuranceID" />
+          </Key>
+          <Property Name="InsuranceID" Type="Int32" Nullable="false" />
+          <Property Name="InsuranceName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="InsuranceAddress" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="InsurancePhone" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="InsuranceWebsite" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Customer_Insurance" Relationship="ScheduleDBModel.FK_Customer_Insurance_Insurance_Type" FromRole="Insurance_Type" ToRole="Customer_Insurance" />
+        </EntityType>
+        <EntityType Name="Professional">
+          <Key>
+            <PropertyRef Name="Professional_ID" />
+          </Key>
+          <Property Name="Professional_ID" Type="Int32" Nullable="false" />
+          <Property Name="Professional_Type_ID" Type="Int32" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Professional_Identification_Number" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Appointments" Relationship="ScheduleDBModel.FK_Appointments_Professional" FromRole="Professional" ToRole="Appointments" />
+          <NavigationProperty Name="Professional_Type" Relationship="ScheduleDBModel.FK_Professional_Professional_Type" FromRole="Professional" ToRole="Professional_Type" />
+          <NavigationProperty Name="Professional_Schedule" Relationship="ScheduleDBModel.FK_Professional_Schedule_Professional" FromRole="Professional" ToRole="Professional_Schedule" />
+        </EntityType>
+        <EntityType Name="Professional_Schedule">
+          <Key>
+            <PropertyRef Name="Professional_ID" />
+            <PropertyRef Name="StartTime" />
+          </Key>
+          <Property Name="Professional_ID" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="TimeIntervalMinutes" Type="Int16" />
+          <NavigationProperty Name="Professional" Relationship="ScheduleDBModel.FK_Professional_Schedule_Professional" FromRole="Professional_Schedule" ToRole="Professional" />
+        </EntityType>
+        <EntityType Name="Professional_Type">
+          <Key>
+            <PropertyRef Name="Professional_Type_ID" />
+          </Key>
+          <Property Name="Professional_Type_ID" Type="Int32" Nullable="false" />
+          <Property Name="Professional_Type_Desc" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Professionals" Relationship="ScheduleDBModel.FK_Professional_Professional_Type" FromRole="Professional_Type" ToRole="Professional" />
+        </EntityType>
+        <EntityType Name="Status_Type">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="StatusDesc" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Appointments" Relationship="ScheduleDBModel.FK_Appointments_Status_Type" FromRole="Status_Type" ToRole="Appointments" />
+        </EntityType>
+        <Association Name="FK_Appointments_Customers">
+          <End Role="Customers" Type="ScheduleDBModel.Customer" Multiplicity="0..1" />
+          <End Role="Appointments" Type="ScheduleDBModel.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Customer_ID" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="Customer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointments_Professional">
+          <End Role="Professional" Type="ScheduleDBModel.Professional" Multiplicity="1" />
+          <End Role="Appointments" Type="ScheduleDBModel.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professional">
+              <PropertyRef Name="Professional_ID" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="Professional_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointments_Status_Type">
+          <End Role="Status_Type" Type="ScheduleDBModel.Status_Type" Multiplicity="0..1" />
+          <End Role="Appointments" Type="ScheduleDBModel.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status_Type">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_Insurance_Customers">
+          <End Role="Customers" Type="ScheduleDBModel.Customer" Multiplicity="1" />
+          <End Role="Customer_Insurance" Type="ScheduleDBModel.Customer_Insurance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Customer_ID" />
+            </Principal>
+            <Dependent Role="Customer_Insurance">
+              <PropertyRef Name="Customer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_Insurance_Insurance_Type">
+          <End Role="Insurance_Type" Type="ScheduleDBModel.Insurance_Type" Multiplicity="1" />
+          <End Role="Customer_Insurance" Type="ScheduleDBModel.Customer_Insurance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insurance_Type">
+              <PropertyRef Name="InsuranceID" />
+            </Principal>
+            <Dependent Role="Customer_Insurance">
+              <PropertyRef Name="InsuranceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Professional_Professional_Type">
+          <End Role="Professional_Type" Type="ScheduleDBModel.Professional_Type" Multiplicity="1" />
+          <End Role="Professional" Type="ScheduleDBModel.Professional" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professional_Type">
+              <PropertyRef Name="Professional_Type_ID" />
+            </Principal>
+            <Dependent Role="Professional">
+              <PropertyRef Name="Professional_Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Professional_Schedule_Professional">
+          <End Role="Professional" Type="ScheduleDBModel.Professional" Multiplicity="1" />
+          <End Role="Professional_Schedule" Type="ScheduleDBModel.Professional_Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Professional">
+              <PropertyRef Name="Professional_ID" />
+            </Principal>
+            <Dependent Role="Professional_Schedule">
+              <PropertyRef Name="Professional_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ScheduleDBModelStoreContainer" CdmEntityContainer="ScheduleDBEntities">
+          <EntitySetMapping Name="Appointments">
+            <EntityTypeMapping TypeName="ScheduleDBModel.Appointment">
+              <MappingFragment StoreEntitySet="Appointments">
+                <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
+                <ScalarProperty Name="Professional_ID" ColumnName="Professional_ID" />
+                <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+                <ScalarProperty Name="AppointmentStartTime" ColumnName="AppointmentStartTime" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customer_Insurance">
+            <EntityTypeMapping TypeName="ScheduleDBModel.Customer_Insurance">
+              <MappingFragment StoreEntitySet="Customer_Insurance">
+                <ScalarProperty Name="InsuranceID" ColumnName="InsuranceID" />
+                <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="PCPName" ColumnName="PCPName" />
+                <ScalarProperty Name="CustomerInsuranceNumber" ColumnName="CustomerInsuranceNumber" />
+                <ScalarProperty Name="InsuranceType" ColumnName="InsuranceType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="ScheduleDBModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Insurance_Type">
+            <EntityTypeMapping TypeName="ScheduleDBModel.Insurance_Type">
+              <MappingFragment StoreEntitySet="Insurance_Type">
+                <ScalarProperty Name="InsuranceID" ColumnName="InsuranceID" />
+                <ScalarProperty Name="InsuranceName" ColumnName="InsuranceName" />
+                <ScalarProperty Name="InsuranceAddress" ColumnName="InsuranceAddress" />
+                <ScalarProperty Name="InsurancePhone" ColumnName="InsurancePhone" />
+                <ScalarProperty Name="InsuranceWebsite" ColumnName="InsuranceWebsite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Professionals">
+            <EntityTypeMapping TypeName="ScheduleDBModel.Professional">
+              <MappingFragment StoreEntitySet="Professional">
+                <ScalarProperty Name="Professional_ID" ColumnName="Professional_ID" />
+                <ScalarProperty Name="Professional_Type_ID" ColumnName="Professional_Type_ID" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Professional_Identification_Number" ColumnName="Professional_Identification_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Professional_Schedule">
+            <EntityTypeMapping TypeName="ScheduleDBModel.Professional_Schedule">
+              <MappingFragment StoreEntitySet="Professional_Schedule">
+                <ScalarProperty Name="Professional_ID" ColumnName="Professional_ID" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="TimeIntervalMinutes" ColumnName="TimeIntervalMinutes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Professional_Type">
+            <EntityTypeMapping TypeName="ScheduleDBModel.Professional_Type">
+              <MappingFragment StoreEntitySet="Professional_Type">
+                <ScalarProperty Name="Professional_Type_ID" ColumnName="Professional_Type_ID" />
+                <ScalarProperty Name="Professional_Type_Desc" ColumnName="Professional_Type_Desc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status_Type">
+            <EntityTypeMapping TypeName="ScheduleDBModel.Status_Type">
+              <MappingFragment StoreEntitySet="Status_Type">
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="StatusDesc" ColumnName="StatusDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -30,8 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,9 +46,75 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessObjects\Appointment.cs">
+      <DependentUpon>EMSDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\Customer.cs">
+      <DependentUpon>EMSDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\Customer_Insurance.cs">
+      <DependentUpon>EMSDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\EMSDatabase.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EMSDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\Insurance_Type.cs">
+      <DependentUpon>EMSDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\Professional.cs">
+      <DependentUpon>EMSDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\Professional_Schedule.cs">
+      <DependentUpon>EMSDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\Professional_Type.cs">
+      <DependentUpon>EMSDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\Status_Type.cs">
+      <DependentUpon>EMSDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EMSDatabase.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EMSDatabase.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\EMSDatabase.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EMSDatabase.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ICustomerRepository.cs" />
     <Compile Include="Test.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="DataAccess\EMSDatabase.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EMSDatabase.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="BusinessObjects\EMSDatabase.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EMSDatabase.cs</LastGenOutput>
+    </None>
+    <None Include="DataAccess\EMSDatabase.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EMSDatabase.edmx</DependentUpon>
+      <LastGenOutput>EMSDatabase.Context.cs</LastGenOutput>
+    </None>
+    <None Include="DataAccess\EMSDatabase.edmx.diagram">
+      <DependentUpon>EMSDatabase.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
