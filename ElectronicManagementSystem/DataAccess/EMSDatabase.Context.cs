@@ -16,7 +16,7 @@ namespace ElectronicManagementSystem.DataAccess
     public partial class ScheduleDBEntities : DbContext
     {
         public ScheduleDBEntities()
-            : base("name=ScheduleDBEntities")
+            : base("name=ScheduleDBEntitiesUmaisOffice")
         {
         }
     
