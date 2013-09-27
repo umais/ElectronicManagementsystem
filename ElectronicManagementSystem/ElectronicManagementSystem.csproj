@@ -87,6 +87,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ICustomerRepository.cs" />
+    <Compile Include="Repositories\InsuranceTypeSQLRepo.cs" />
+    <Compile Include="Repositories\I_InsuranceTypeRepo.cs" />
     <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
