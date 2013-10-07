@@ -3,7 +3,7 @@
 
 
 CREATE TABLE [dbo].[Customers](
-	[Customer_ID] [int] NOT NULL,
+	[Customer_ID] [int] IDENTITY(1,1) NOT NULL,
 	[FirstName] [nvarchar](50) NULL,
 	[LastName] [nvarchar](50) NULL,
 	[DateOfBirth] [date] NULL,
@@ -28,7 +28,7 @@ GO
 
 
 CREATE TABLE [dbo].[Professional_Type](
-	[Professional_Type_ID] [int] NOT NULL,
+	[Professional_Type_ID] [int] IDENTITY(1,1) NOT NULL,
 	[Professional_Type_Desc] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_Professional_Type] PRIMARY KEY CLUSTERED 
 (
@@ -42,7 +42,7 @@ GO
 
 
 CREATE TABLE [dbo].[Professional](
-	[Professional_ID] [int] NOT NULL,
+	[Professional_ID] [int] IDENTITY(1,1) NOT NULL,
 	[Professional_Type_ID] [int] NOT NULL,
 	[First_Name] [nvarchar](50) NULL,
 	[Last_Name] [nvarchar](50) NULL,
@@ -67,7 +67,7 @@ GO
 
 
 CREATE TABLE [dbo].[Status_Type](
-	[StatusID] [int] NOT NULL,
+	[StatusID] [int] IDENTITY(1,1) NOT NULL,
 	[StatusDesc] [nvarchar](50) NULL,
  CONSTRAINT [PK_Status_Type] PRIMARY KEY CLUSTERED 
 (
@@ -82,7 +82,7 @@ GO
 
 
 CREATE TABLE [dbo].[Appointments](
-	[AppointmentID] [int] NOT NULL,
+	[AppointmentID] [int] IDENTITY(1,1) NOT NULL,
 	[Professional_ID] [int] NOT NULL,
 	[Customer_ID] [int] NULL,
 	[AppointmentDate] [date] NOT NULL,
@@ -122,7 +122,7 @@ GO
 
 
 CREATE TABLE [dbo].[Insurance_Type](
-	[InsuranceID] [int] NOT NULL,
+	[InsuranceID] [int] IDENTITY(1,1) NOT NULL,
 	[InsuranceName] [nvarchar](50) NULL,
 	[InsuranceAddress] [nvarchar](150) NULL,
 	[InsurancePhone] [nvarchar](10) NULL,
@@ -176,10 +176,15 @@ GO
 
 
 CREATE TABLE [dbo].[Professional_Schedule](
+	[Professional_Schedule_ID] [int] IDENTITY(1,1) NOT NULL,
 	[Professional_ID] [int] NOT NULL,
 	[StartTime] [datetime] NOT NULL,
 	[EndTime] [datetime] NULL,
-	[TimeIntervalMinutes] [smallint] NULL
+	[TimeIntervalMinutes] [smallint] NULL,
+	CONSTRAINT [PK_Professional_Schedule] PRIMARY KEY CLUSTERED 
+(
+	[Professional_Schedule_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
