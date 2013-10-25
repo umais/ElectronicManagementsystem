@@ -189,9 +189,3 @@ CREATE TABLE [dbo].[Professional_Schedule](
 
 GO
 
-ALTER TABLE [dbo].[Professional_Schedule]  WITH CHECK ADD  CONSTRAINT [FK_Professional_Schedule_Professional] FOREIGN KEY([Professional_ID])
-REFERENCES [dbo].[Professional] ([Professional_ID])
-GO
-
-ALTER TABLE [dbo].[Professional_Schedule] CHECK CONSTRAINT [FK_Professional_Schedule_Professional]
-GO

@@ -18,7 +18,6 @@ namespace ElectronicManagementSystem.BusinessObjects
         public System.DateTime StartTime { get; set; }
         public Nullable<System.DateTime> EndTime { get; set; }
         public Nullable<short> TimeIntervalMinutes { get; set; }
-    
-        public virtual Professional Professional { get; set; }
+        public int Professional_Schedule_ID { get; set; }
     }
 }

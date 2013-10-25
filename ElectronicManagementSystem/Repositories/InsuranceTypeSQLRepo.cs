@@ -7,7 +7,7 @@ using ElectronicManagementSystem.DataAccess;
 using ElectronicManagementSystem.BusinessObjects;
 namespace ElectronicManagementSystem.Repositories
 {
-    public class InsuranceTypeSQLRepo:I_InsuranceTypeRepo
+    public class InsuranceTypeSQLRepo
     {
         ScheduleDBEntities dbContext = new ScheduleDBEntities();
 
@@ -24,6 +24,19 @@ namespace ElectronicManagementSystem.Repositories
             dbContext.SaveChanges();
             result = true;
             return result;
+        }
+
+        public bool updateInsurance(Insurance_Type updated){
+             Insurance_Type existingRecord= (from u in dbContext.Insurance_Type where u.InsuranceID == updated.InsuranceID select u).FirstOrDefault() ;
+
+             existingRecord.InsuranceName = updated.InsuranceName;
+             existingRecord.InsurancePhone = updated.InsurancePhone;
+             existingRecord.InsuranceWebsite = updated.InsuranceWebsite;
+             existingRecord.InsuranceAddress = updated.InsuranceAddress;
+
+             dbContext.SaveChanges();
+
+             return true;
         }
     }
 }

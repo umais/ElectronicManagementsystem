@@ -17,7 +17,6 @@ namespace ElectronicManagementSystem.BusinessObjects
         public Professional()
         {
             this.Appointments = new HashSet<Appointment>();
-            this.Professional_Schedule = new HashSet<Professional_Schedule>();
         }
     
         public int Professional_ID { get; set; }
@@ -29,6 +28,5 @@ namespace ElectronicManagementSystem.BusinessObjects
     
         public virtual ICollection<Appointment> Appointments { get; set; }
         public virtual Professional_Type Professional_Type { get; set; }
-        public virtual ICollection<Professional_Schedule> Professional_Schedule { get; set; }
     }
 }

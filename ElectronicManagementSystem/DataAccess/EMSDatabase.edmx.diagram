@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="ScheduleDBModel.Customer" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ScheduleDBModel.Insurance_Type" Width="1.5" PointX="3" PointY="13.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ScheduleDBModel.Professional" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScheduleDBModel.Professional_Schedule" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScheduleDBModel.Professional_Schedule" Width="3" PointX="5.25" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ScheduleDBModel.Professional_Type" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ScheduleDBModel.Status_Type" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="ScheduleDBModel.FK_Appointments_Customers" ManuallyRouted="false" />
@@ -19,7 +19,6 @@
         <AssociationConnector Association="ScheduleDBModel.FK_Customer_Insurance_Customers" ManuallyRouted="false" />
         <AssociationConnector Association="ScheduleDBModel.FK_Customer_Insurance_Insurance_Type" ManuallyRouted="false" />
         <AssociationConnector Association="ScheduleDBModel.FK_Professional_Professional_Type" ManuallyRouted="false" />
-        <AssociationConnector Association="ScheduleDBModel.FK_Professional_Schedule_Professional" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

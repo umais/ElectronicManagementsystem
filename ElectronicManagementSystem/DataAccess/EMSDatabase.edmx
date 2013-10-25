@@ -4,21 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ScheduleDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ScheduleDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="ScheduleDBModelStoreContainer">
           <EntitySet Name="Appointments" EntityType="ScheduleDBModel.Store.Appointments" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Customer_Insurance" EntityType="ScheduleDBModel.Store.Customer_Insurance" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Customers" EntityType="ScheduleDBModel.Store.Customers" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Insurance_Type" EntityType="ScheduleDBModel.Store.Insurance_Type" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Professional" EntityType="ScheduleDBModel.Store.Professional" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Professional_Schedule" EntityType="ScheduleDBModel.Store.Professional_Schedule" store:Type="Tables" store:Schema="dbo" store:Name="Professional_Schedule">
-            <DefiningQuery>SELECT 
-      [Professional_Schedule].[Professional_ID] AS [Professional_ID], 
-      [Professional_Schedule].[StartTime] AS [StartTime], 
-      [Professional_Schedule].[EndTime] AS [EndTime], 
-      [Professional_Schedule].[TimeIntervalMinutes] AS [TimeIntervalMinutes]
-      FROM [dbo].[Professional_Schedule] AS [Professional_Schedule]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Professional_Schedule" EntityType="ScheduleDBModel.Store.Professional_Schedule" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Professional_Type" EntityType="ScheduleDBModel.Store.Professional_Type" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Status_Type" EntityType="ScheduleDBModel.Store.Status_Type" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Appointments_Customers" Association="ScheduleDBModel.Store.FK_Appointments_Customers">
@@ -45,16 +38,12 @@
             <End Role="Professional_Type" EntitySet="Professional_Type" />
             <End Role="Professional" EntitySet="Professional" />
           </AssociationSet>
-          <AssociationSet Name="FK_Professional_Schedule_Professional" Association="ScheduleDBModel.Store.FK_Professional_Schedule_Professional">
-            <End Role="Professional" EntitySet="Professional" />
-            <End Role="Professional_Schedule" EntitySet="Professional_Schedule" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Appointments">
           <Key>
             <PropertyRef Name="AppointmentID" />
           </Key>
-          <Property Name="AppointmentID" Type="int" Nullable="false" />
+          <Property Name="AppointmentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Professional_ID" Type="int" Nullable="false" />
           <Property Name="Customer_ID" Type="int" />
           <Property Name="AppointmentDate" Type="date" Nullable="false" />
@@ -80,7 +69,7 @@
           <Key>
             <PropertyRef Name="Customer_ID" />
           </Key>
-          <Property Name="Customer_ID" Type="int" Nullable="false" />
+          <Property Name="Customer_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="DateOfBirth" Type="date" />
@@ -96,7 +85,7 @@
           <Key>
             <PropertyRef Name="InsuranceID" />
           </Key>
-          <Property Name="InsuranceID" Type="int" Nullable="false" />
+          <Property Name="InsuranceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="InsuranceName" Type="nvarchar" MaxLength="50" />
           <Property Name="InsuranceAddress" Type="nvarchar" MaxLength="150" />
           <Property Name="InsurancePhone" Type="nvarchar" MaxLength="10" />
@@ -106,21 +95,18 @@
           <Key>
             <PropertyRef Name="Professional_ID" />
           </Key>
-          <Property Name="Professional_ID" Type="int" Nullable="false" />
+          <Property Name="Professional_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Professional_Type_ID" Type="int" Nullable="false" />
           <Property Name="First_Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Last_Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" />
           <Property Name="Professional_Identification_Number" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'ScheduleDB.dbo.Professional_Schedule' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
         <EntityType Name="Professional_Schedule">
           <Key>
-            <PropertyRef Name="Professional_ID" />
-            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="Professional_Schedule_ID" />
           </Key>
+          <Property Name="Professional_Schedule_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Professional_ID" Type="int" Nullable="false" />
           <Property Name="StartTime" Type="datetime" Nullable="false" />
           <Property Name="EndTime" Type="datetime" />
@@ -130,14 +116,14 @@
           <Key>
             <PropertyRef Name="Professional_Type_ID" />
           </Key>
-          <Property Name="Professional_Type_ID" Type="int" Nullable="false" />
+          <Property Name="Professional_Type_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Professional_Type_Desc" Type="nvarchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <EntityType Name="Status_Type">
           <Key>
             <PropertyRef Name="StatusID" />
           </Key>
-          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="StatusID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="StatusDesc" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Appointments_Customers">
@@ -212,20 +198,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Professional_Schedule_Professional">
-          <End Role="Professional" Type="ScheduleDBModel.Store.Professional" Multiplicity="1" />
-          <End Role="Professional_Schedule" Type="ScheduleDBModel.Store.Professional_Schedule" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Professional">
-              <PropertyRef Name="Professional_ID" />
-            </Principal>
-            <Dependent Role="Professional_Schedule">
-              <PropertyRef Name="Professional_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ScheduleDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -261,10 +234,6 @@
           <AssociationSet Name="FK_Professional_Professional_Type" Association="ScheduleDBModel.FK_Professional_Professional_Type">
             <End Role="Professional_Type" EntitySet="Professional_Type" />
             <End Role="Professional" EntitySet="Professionals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Professional_Schedule_Professional" Association="ScheduleDBModel.FK_Professional_Schedule_Professional">
-            <End Role="Professional" EntitySet="Professionals" />
-            <End Role="Professional_Schedule" EntitySet="Professional_Schedule" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Appointment">
@@ -339,18 +308,16 @@
           <Property Name="Professional_Identification_Number" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Appointments" Relationship="ScheduleDBModel.FK_Appointments_Professional" FromRole="Professional" ToRole="Appointments" />
           <NavigationProperty Name="Professional_Type" Relationship="ScheduleDBModel.FK_Professional_Professional_Type" FromRole="Professional" ToRole="Professional_Type" />
-          <NavigationProperty Name="Professional_Schedule" Relationship="ScheduleDBModel.FK_Professional_Schedule_Professional" FromRole="Professional" ToRole="Professional_Schedule" />
         </EntityType>
         <EntityType Name="Professional_Schedule">
           <Key>
-            <PropertyRef Name="Professional_ID" />
-            <PropertyRef Name="StartTime" />
+            <PropertyRef Name="Professional_Schedule_ID" />
           </Key>
           <Property Name="Professional_ID" Type="Int32" Nullable="false" />
           <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EndTime" Type="DateTime" Precision="3" />
           <Property Name="TimeIntervalMinutes" Type="Int16" />
-          <NavigationProperty Name="Professional" Relationship="ScheduleDBModel.FK_Professional_Schedule_Professional" FromRole="Professional_Schedule" ToRole="Professional" />
+          <Property Type="Int32" Name="Professional_Schedule_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Professional_Type">
           <Key>
@@ -440,18 +407,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Professional_Schedule_Professional">
-          <End Role="Professional" Type="ScheduleDBModel.Professional" Multiplicity="1" />
-          <End Role="Professional_Schedule" Type="ScheduleDBModel.Professional_Schedule" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Professional">
-              <PropertyRef Name="Professional_ID" />
-            </Principal>
-            <Dependent Role="Professional_Schedule">
-              <PropertyRef Name="Professional_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -527,6 +482,7 @@
           <EntitySetMapping Name="Professional_Schedule">
             <EntityTypeMapping TypeName="ScheduleDBModel.Professional_Schedule">
               <MappingFragment StoreEntitySet="Professional_Schedule">
+                <ScalarProperty Name="Professional_Schedule_ID" ColumnName="Professional_Schedule_ID" />
                 <ScalarProperty Name="Professional_ID" ColumnName="Professional_ID" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />

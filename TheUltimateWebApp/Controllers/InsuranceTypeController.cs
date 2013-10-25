@@ -12,6 +12,7 @@ namespace TheUltimateWebApp.Controllers
     {
         InsuranceTypeSQLRepo InsuranceRepo = new InsuranceTypeSQLRepo();
 
+   
         public List<Insurance_Type> getInsuranceTypes()
         {
             return InsuranceRepo.getInsuranceTypes();
@@ -22,5 +23,18 @@ namespace TheUltimateWebApp.Controllers
 
             InsuranceRepo.AddInsuranceType(newRecord);
         }
+
+        
+        public void PutInsurance([FromBody] Insurance_Type newRecord)
+        {
+
+            InsuranceRepo.updateInsurance(newRecord);
+
+
+
+
+            //InsuranceRepo.AddInsuranceType(newRecord);
+        }
+
     }
 }
